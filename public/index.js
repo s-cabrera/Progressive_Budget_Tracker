@@ -1,4 +1,3 @@
-import {saveRecord} from './db.js'
 let transactions = [];
 let myChart;
 

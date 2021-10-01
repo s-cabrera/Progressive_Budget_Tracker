@@ -29,7 +29,7 @@ function checkDB() {
     allTransactions.onsuccess = () => {
         //If there are records, add them to the MongoDB 
         if (allTransactions.result.length > 0) {
-            for(let index = 0; index < allTransactions.result.length; index++) {
+            for (let index = 0; index < allTransactions.result.length; index++) {
                 fetch("/api/transaction", {
                     method: "POST",
                     body: JSON.stringify(allTransactions.result[index]),
@@ -38,8 +38,8 @@ function checkDB() {
                         "Content-Type": "application/json"
                     }
                 })
-                .then((response) => response.json())
-                .then((res) => {
+                    .then((response) => response.json())
+                    .then((res) => {
                         //If the call was successful, clear the indexDB
                         if (res.length !== 0) {
                             trans = db.transaction(["budget"], "readwrite");
@@ -51,34 +51,33 @@ function checkDB() {
                             store.clear();
                             console.log('Clearing store 🧹');
                         }
-                })
+                    })
 
             }
         }
     }
 }
-    //
 
 
-    request.onsuccess = function (event) {
-        db = event.target.result;
-        // Check if app is online before reading from db
-        if (navigator.onLine) {
-            console.log('Backend online! 🗄️');
-            checkDB();
-        }
+request.onsuccess = function (event) {
+    db = event.target.result;
+    // Check if app is online before reading from db
+    if (navigator.onLine) {
+        console.log('Backend online! 🗄️');
+        checkDB();
     }
+}
 
-    //Stores the data (transaction) in IndexDB
-    const saveRecord = (data) => {
-        console.log('Saving Record');
-        // Create a transaction on the BudgetStore db with readwrite access
-        const trans = db.transaction(["budget"], "readwrite");
-        const objectStore = trans.objectStore("budget")
-        objectStore.add(data)
-    };
+//Stores the data (transaction) in IndexDB
+const saveRecord = (data) => {
+    console.log('Saving Record');
+    // Create a transaction on the BudgetStore db with readwrite access
+    const trans = db.transaction(["budget"], "readwrite");
+    const objectStore = trans.objectStore("budget")
+    objectStore.add(data)
+};
 
-    // Listen for app coming back online
-    window.addEventListener('online', checkDB);
+// Listen for app coming back online
+window.addEventListener('online', checkDB);
 
-    export {saveRecord}
+module.exports = {saveRecord};
