@@ -14,8 +14,7 @@ request.onupgradeneeded = function (event) {
     // If there are no 
     if (db.objectStoreNames.length === 0) {
         // const objectStore = 
-        db.createObjectStore("budget", { autoIncrement: true }); //, keyPath: "date" });
-        // objectStore.createIndex("transactions", "transaction");
+        db.createObjectStore("budget", { autoIncrement: true });
     }
 }
 
@@ -29,10 +28,7 @@ function checkDB() {
 
     allTransactions.onsuccess = () => {
         //If there are records, add them to the MongoDB 
-        console.log(allTransactions.result);
-        console.log(`length: ${allTransactions.result.length}`);
         if (allTransactions.result.length > 0) {
-            console.log("Length > 0");
             for(let index = 0; index < allTransactions.result.length; index++) {
                 fetch("/api/transaction", {
                     method: "POST",
@@ -75,8 +71,7 @@ function checkDB() {
 
     //Stores the data (transaction) in IndexDB
     const saveRecord = (data) => {
-        console.log('Save record invoked');
-        console.log(data);
+        console.log('Saving Record');
         // Create a transaction on the BudgetStore db with readwrite access
         const trans = db.transaction(["budget"], "readwrite");
         const objectStore = trans.objectStore("budget")
