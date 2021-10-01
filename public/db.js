@@ -79,5 +79,3 @@ const saveRecord = (data) => {
 
 // Listen for app coming back online
 window.addEventListener('online', checkDB);
-
-module.exports = {saveRecord};
