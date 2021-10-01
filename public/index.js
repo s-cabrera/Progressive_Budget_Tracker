@@ -1,5 +1,7 @@
+import {saveRecord} from './db.js'
 let transactions = [];
 let myChart;
+
 
 fetch("/api/transaction")
   .then(response => {

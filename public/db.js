@@ -80,3 +80,5 @@ function checkDB() {
 
     // Listen for app coming back online
     window.addEventListener('online', checkDB);
+
+    export {saveRecord}
